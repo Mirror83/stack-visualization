@@ -10,7 +10,7 @@ class Candy(pygame.sprite.Sprite):
         super().__init__(*groups)
         self.image = pygame.Surface((50, 50))
         self.image.fill("Red")
-        self.rect = self.image.get_rect(midbottom=(500, Candy.VERTICAL_START))
+        self.rect = self.image.get_rect(midbottom=(600, Candy.VERTICAL_START))
         print(f"{Candy.VERTICAL_START=}")
         self.t = 0
 
