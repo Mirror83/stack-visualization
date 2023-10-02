@@ -10,4 +10,13 @@ class CandyGroup(Group):
     def shift_after_removal(self):
         for sprite in self.spritedict.keys():
             if isinstance(sprite, Candy):
-                print("Will shift")
+                sprite.rect.bottom -= 10
+
+        Candy.VERTICAL_START -= 10
+
+    def shift_after_addition(self):
+        for sprite in self.spritedict.keys():
+            if isinstance(sprite, Candy):
+                sprite.rect.bottom += 10
+
+        Candy.VERTICAL_START += 10
