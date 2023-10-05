@@ -26,15 +26,9 @@ class CandyGroup(Group):
         for sprite in self.spritedict.keys():
             if isinstance(sprite, Candy):
                 sprite.move_up()
-                # sprite.rect.bottom -= 10
-
-        # Candy.VERTICAL_START -= 10
 
     def shift_after_addition(self):
         self.motion_state = MotionState.DOWN
         for sprite in self.spritedict.keys():
             if isinstance(sprite, Candy):
                 sprite.move_down()
-                # sprite.rect.bottom += 10
-
-        # Candy.VERTICAL_START += 10
