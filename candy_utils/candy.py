@@ -2,29 +2,37 @@ from typing import Any
 
 import pygame
 from pygame import Vector2
+from pygame.font import Font
 
 from candy_utils.motion_state import MotionState
 
 
 class Candy(pygame.sprite.Sprite):
+    CANDY_COLORS = ["Red", "Purple", "Pink", "Yellow"]
+    TOTAL_CANDIES = 0
     SIZE = Vector2(150, 50)
     VERTICAL_START = 600
     HEIGHT_CHANGE = 30
     INTERPOLATION_SPEED = 0.05
     VERTICAL_START_CHANGE = 40
+    TEXT_POSITION = Vector2(10, 10)
 
     def __init__(self, *groups: pygame.sprite.Group):
         super().__init__(*groups)
+        self.number = Candy.TOTAL_CANDIES
+        self.color = Candy.CANDY_COLORS[self.number % len(Candy.CANDY_COLORS)]
         self.image = pygame.Surface(Candy.SIZE)
-        self.image.fill("Red")
+        self.image.fill(self.color)
         self.rect = self.image.get_rect(midbottom=(600, Candy.VERTICAL_START))
+
+        self.label_surface = Font(None, 50). \
+            render(str(self.number), True, "Black"). \
+            convert_alpha()
 
         self.motion_state: MotionState = MotionState.REST
         self.current_position: Vector2 = Vector2(self.rect.midbottom)
         self.next_position: Vector2 | None = None
         self.t = 0
-
-        print(f"{Candy.VERTICAL_START=}")
 
     def move_up(self):
         self.motion_state = MotionState.UP
@@ -54,10 +62,13 @@ class Candy(pygame.sprite.Sprite):
     @classmethod
     def decrement_vertical_start(cls):
         Candy.VERTICAL_START -= Candy.VERTICAL_START_CHANGE
+        Candy.TOTAL_CANDIES += 1
 
     @classmethod
     def increment_vertical_start(cls):
         Candy.VERTICAL_START += Candy.VERTICAL_START_CHANGE
+        Candy.TOTAL_CANDIES -= 1
 
     def update(self, *args: Any, **kwargs: Any):
         self.move()
+        self.image.blit(self.label_surface, Candy.TEXT_POSITION)
