@@ -8,8 +8,8 @@ class Spring:
     """
     Represents a spring but for now is actually just a solid rectangle
     """
-    SIZE = Vector2(200, 300)
-    MID_BOTTOM = Vector2(600, 700)
+    SIZE = Vector2(200, 400)
+    MID_BOTTOM = Vector2(300, 700)
     HEIGHT_CHANGE = 30
     INTERPOLATION_SPEED = 0.05
 
