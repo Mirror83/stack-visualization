@@ -11,6 +11,7 @@ class Candy(pygame.sprite.Sprite):
     CANDY_COLORS = ["Red", "Purple", "Pink", "Yellow"]
     TOTAL_CANDIES = 0
     SIZE = Vector2(150, 50)
+    BASE_VERTICAL_START = 600
     VERTICAL_START = 600
     HEIGHT_CHANGE = 30
     INTERPOLATION_SPEED = 0.05
@@ -23,7 +24,8 @@ class Candy(pygame.sprite.Sprite):
         self.color = Candy.CANDY_COLORS[self.number % len(Candy.CANDY_COLORS)]
         self.image = pygame.Surface(Candy.SIZE)
         self.image.fill(self.color)
-        self.rect = self.image.get_rect(midbottom=(600, Candy.VERTICAL_START))
+        print(Candy.VERTICAL_START)
+        self.rect = self.image.get_rect(midbottom=(300, Candy.VERTICAL_START))
 
         self.label_surface = Font(None, 50). \
             render(str(self.number), True, "Black"). \
@@ -66,9 +68,12 @@ class Candy(pygame.sprite.Sprite):
 
     @classmethod
     def increment_vertical_start(cls):
-        Candy.VERTICAL_START += Candy.VERTICAL_START_CHANGE
-        Candy.TOTAL_CANDIES -= 1
+        Candy.VERTICAL_START = min(Candy.BASE_VERTICAL_START, Candy.VERTICAL_START + Candy.VERTICAL_START_CHANGE)
+        Candy.TOTAL_CANDIES = max(0, Candy.TOTAL_CANDIES - 1)
 
     def update(self, *args: Any, **kwargs: Any):
         self.move()
         self.image.blit(self.label_surface, Candy.TEXT_POSITION)
+
+    def __str__(self) -> str:
+        return f"Candy(Color={self.color}, Number={self.number})"
