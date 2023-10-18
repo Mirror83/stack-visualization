@@ -24,7 +24,7 @@ class Candy(pygame.sprite.Sprite):
         self.color = Candy.CANDY_COLORS[self.number % len(Candy.CANDY_COLORS)]
         self.image = pygame.Surface(Candy.SIZE)
         self.image.fill(self.color)
-        print(Candy.VERTICAL_START)
+        print(f"candy: Candy.VERTICAL_START = {Candy.VERTICAL_START}")
         self.rect = self.image.get_rect(midbottom=(300, Candy.VERTICAL_START))
 
         self.label_surface = Font(None, 50). \
