@@ -18,6 +18,7 @@ class CandyGroup(Group):
             Candy.increment_vertical_start()
         elif self.motion_state is MotionState.DOWN:
             Candy.decrement_vertical_start()
+        self.motion_state = MotionState.REST
 
         return True
 
