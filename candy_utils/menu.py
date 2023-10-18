@@ -1,7 +1,7 @@
 from typing import Callable, Literal
 
 import pygame.mouse
-from pygame import Surface, Vector2, Rect, Cursor, SYSTEM_CURSOR_HAND, SYSTEM_CURSOR_ARROW
+from pygame import Surface, Vector2, Rect, SYSTEM_CURSOR_HAND, SYSTEM_CURSOR_ARROW
 from pygame.font import Font
 
 
@@ -12,32 +12,37 @@ class Menu:
     """
 
     class TextButton:
-        def __init__(self, text: str, top_left: Vector2, on_click_handler: Callable[[], None]):
+        def __init__(self, text: str, top_left: Vector2, on_click_handler: Callable[[], None],
+                     size: Vector2 = Vector2(150, 50)):
             self.text = text
-            self.rect = Rect(top_left, Vector2(100, 100))
             self.font = Font(None, 50)
             self.color: Literal["Black", "Purple", "Red"] = "Black"
+            self.font_surface = self.font.render(self.text, True, self.color).convert_alpha()
+            self.rect = Rect(top_left, self.font_surface.get_size())
             self.on_click_handler = on_click_handler
 
         def render(self, menu: Surface):
-            menu.blit(self.font.render(self.text, True, self.color).convert_alpha(), self.rect)
+            self.check_hover()
+            self.font_surface = self.font.render(self.text, True, self.color).convert_alpha()
+            menu.blit(self.font_surface, self.rect)
+            # pygame.draw.rect(menu, "Red", self.rect, width=1)
 
-            self.listen_for_click()
-
-        def listen_for_click(self):
-            pressed = pygame.mouse.get_pressed()
+        def is_hover(self):
             mouse_pos = Vector2(pygame.mouse.get_pos())
             mouse_pos.x -= 600  # To account for positioning relative to menu Surface
+            is_hover = self.rect.collidepoint(mouse_pos)
+            return is_hover
 
-            if self.rect.collidepoint(mouse_pos):
-                pygame.mouse.set_cursor(Cursor(SYSTEM_CURSOR_HAND))
+        def check_hover(self):
+            if self.is_hover():
                 self.color = "Purple"
-                if pressed[0]:
-                    self.on_click_handler()
-                    self.color = "Red"
+                pygame.mouse.set_system_cursor(SYSTEM_CURSOR_HAND)
             else:
                 self.color = "Black"
-                pygame.mouse.set_cursor(Cursor(SYSTEM_CURSOR_ARROW))
+                pygame.mouse.set_system_cursor(SYSTEM_CURSOR_ARROW)
+
+        def click(self):
+            self.on_click_handler()
 
     class CommandOutput:
         def __init__(self, text: str, top_left: Vector2):
