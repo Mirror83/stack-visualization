@@ -66,7 +66,7 @@ def on_top():
     global candy_stack, menu
     if not candy_stack.is_empty():
         menu.update_command_output(str(candy_stack.peek()))
-        print("top: candy_stack.peek()")
+        print(f"top: {candy_stack.peek()}")
     else:
         menu.update_command_output("Candy stack is empty")
         print("top: Candy stack is empty")
