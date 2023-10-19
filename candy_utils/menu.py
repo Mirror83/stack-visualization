@@ -1,7 +1,7 @@
 from typing import Callable, Literal
 
 import pygame.mouse
-from pygame import Surface, Vector2, Rect, SYSTEM_CURSOR_HAND, SYSTEM_CURSOR_ARROW
+from pygame import Surface, Vector2, Rect, SYSTEM_CURSOR_HAND, SYSTEM_CURSOR_ARROW, Cursor
 from pygame.font import Font
 
 
@@ -20,11 +20,14 @@ class Menu:
             self.font_surface = self.font.render(self.text, True, self.color).convert_alpha()
             self.rect = Rect(top_left, self.font_surface.get_size())
             self.on_click_handler = on_click_handler
+            self.cursors = [Cursor(SYSTEM_CURSOR_ARROW), Cursor(SYSTEM_CURSOR_HAND)]
+            self.cursor = self.cursors[0]
 
         def render(self, menu: Surface):
             self.check_hover()
             self.font_surface = self.font.render(self.text, True, self.color).convert_alpha()
             menu.blit(self.font_surface, self.rect)
+            pygame.mouse.set_cursor(self.cursor)
             # pygame.draw.rect(menu, "Red", self.rect, width=1)
 
         def is_hover(self):
@@ -36,10 +39,10 @@ class Menu:
         def check_hover(self):
             if self.is_hover():
                 self.color = "Purple"
-                pygame.mouse.set_system_cursor(SYSTEM_CURSOR_HAND)
+                self.cursor = self.cursors[1]
             else:
                 self.color = "Black"
-                pygame.mouse.set_system_cursor(SYSTEM_CURSOR_ARROW)
+                self.cursor = self.cursors[0]
 
         def click(self):
             self.on_click_handler()
