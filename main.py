@@ -1,5 +1,3 @@
-# TODO: Create an over-arching class to hold the objects required for the visualization
-
 from sys import exit
 
 import pygame
