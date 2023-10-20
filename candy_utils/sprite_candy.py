@@ -68,7 +68,8 @@ class SpriteCandy(pygame.sprite.Sprite):
 
     @classmethod
     def increment_vertical_start(cls):
-        SpriteCandy.VERTICAL_START = min(SpriteCandy.BASE_VERTICAL_START, SpriteCandy.VERTICAL_START + SpriteCandy.VERTICAL_START_CHANGE)
+        SpriteCandy.VERTICAL_START = min(SpriteCandy.BASE_VERTICAL_START,
+                                         SpriteCandy.VERTICAL_START + SpriteCandy.VERTICAL_START_CHANGE)
         SpriteCandy.TOTAL_CANDIES = max(0, SpriteCandy.TOTAL_CANDIES - 1)
 
     def update(self, *args: Any, **kwargs: Any):
