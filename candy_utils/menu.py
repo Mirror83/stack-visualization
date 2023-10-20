@@ -10,12 +10,13 @@ class Menu:
     A very specific menu that is used to display buttons that invoke operations on a stack
     and output, if any
     """
+    FONT_SIZE = 50
+    MOUSE_OFFSET = 600
 
     class TextButton:
-        def __init__(self, text: str, top_left: Vector2, on_click_handler: Callable[[], None],
-                     size: Vector2 = Vector2(150, 50)):
+        def __init__(self, text: str, top_left: Vector2, on_click_handler: Callable[[], None], font_size: int):
             self.text = text
-            self.font = Font(None, 50)
+            self.font = Font(None, font_size)
             self.color: Literal["Black", "Purple", "Red"] = "Black"
             self.font_surface = self.font.render(self.text, True, self.color).convert_alpha()
             self.rect = Rect(top_left, self.font_surface.get_size())
@@ -32,7 +33,7 @@ class Menu:
 
         def is_hover(self):
             mouse_pos = Vector2(pygame.mouse.get_pos())
-            mouse_pos.x -= 600  # To account for positioning relative to menu Surface
+            mouse_pos.x -= Menu.MOUSE_OFFSET  # To account for positioning relative to menu Surface
             is_hover = self.rect.collidepoint(mouse_pos)
             return is_hover
 
@@ -50,7 +51,7 @@ class Menu:
     class CommandOutput:
         def __init__(self, text: str, top_left: Vector2):
             self.text = text
-            self.font = Font(None, 50)
+            self.font = Font(None, 30)
             self.color: Literal["Red", "Green"] = "Green"
 
             self.top_left = top_left
@@ -61,8 +62,10 @@ class Menu:
         def render(self, menu: Surface):
             menu.blit(self.font.render(self.text, True, self.color), self.top_left)
 
-    def __init__(self, buttons: list[TextButton]):
-        self.image = Surface(Vector2(600, 800)).convert_alpha()
+    def __init__(self, buttons: list[TextButton], size: Vector2, font_size: int = 50, mouse_offset: float = 600):
+        Menu.FONT_SIZE = font_size
+        Menu.MOUSE_OFFSET = mouse_offset
+        self.image = Surface(size).convert_alpha()
         self.image.fill("White")
         self.rect = self.image.get_rect()
         self.command_output = Menu.CommandOutput("", Vector2(self.rect.left + 20, 150))
@@ -81,5 +84,6 @@ class Menu:
                          Vector2(screen_rect.centerx, 350),
                          Vector2(screen_rect.right, 350),
                          width=4)
+
         for button in self.buttons:
             button.render(self.image)
