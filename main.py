@@ -1,11 +1,11 @@
-# TODO: Create an over-arching class to hold the objects required for the simulation
+# TODO: Create an over-arching class to hold the objects required for the visualization
 
 from sys import exit
 
 import pygame
 from pygame import Vector2, QUIT, MOUSEBUTTONUP, BUTTON_LEFT
 
-from candy_utils.candy import Candy
+from candy_utils.sprite_candy import SpriteCandy
 from candy_utils.candy_group import CandyGroup
 from candy_utils.menu import Menu
 from candy_utils.spring import Spring
@@ -29,8 +29,8 @@ candy_group = CandyGroup()
 def on_push():
     global candy_group, candy_stack, spring, menu
     is_done_shifting = candy_group.is_done_shifting()
-    if Candy.VERTICAL_START > 0 and is_done_shifting:
-        candy = Candy()
+    if SpriteCandy.VERTICAL_START > 0 and is_done_shifting:
+        candy = SpriteCandy()
         candy_stack.push(candy)
         candy_group.add(candy)
         candy_group.shift_after_addition()
@@ -68,7 +68,7 @@ def on_top():
         menu.update_command_output(str(candy_stack.peek()))
         print(f"top: {candy_stack.peek()}")
     else:
-        menu.update_command_output("Candy stack is empty")
+        menu.update_command_output("SpriteCandy stack is empty")
         print("top: Candy stack is empty")
 
 
@@ -83,15 +83,15 @@ def on_len():
 
 
 buttons = [
-    Menu.TextButton("S.push()", Vector2(20, 450), on_push),
-    Menu.TextButton("S.pop()", Vector2(20, 550), on_pop),
-    Menu.TextButton("S.top()", Vector2(200, 450), on_top),
-    Menu.TextButton("S.isEmpty()", Vector2(200, 550), on_is_empty),
-    Menu.TextButton("len(S)", Vector2(380, 450), on_len)
+    Menu.TextButton("S.push()", Vector2(20, 450), on_push, 50),
+    Menu.TextButton("S.pop()", Vector2(20, 550), on_pop, 50),
+    Menu.TextButton("S.top()", Vector2(200, 450), on_top, 50),
+    Menu.TextButton("S.isEmpty()", Vector2(200, 550), on_is_empty, 50),
+    Menu.TextButton("len(S)", Vector2(380, 450), on_len, 50)
 ]
-menu = Menu(buttons)
+menu = Menu(buttons, size=Vector2(SCREEN_WIDTH / 2, SCREEN_HEIGHT), font_size=60)
 
-Candy.VERTICAL_START = Candy.BASE_VERTICAL_START = SCREEN_HEIGHT - Spring.SIZE.y - 120
+SpriteCandy.VERTICAL_START = SpriteCandy.BASE_VERTICAL_START = SCREEN_HEIGHT - Spring.SIZE.y - 120
 
 clock = pygame.time.Clock()
 MAX_FPS = 60

@@ -7,7 +7,7 @@ from pygame.font import Font
 from candy_utils.motion_state import MotionState
 
 
-class Candy(pygame.sprite.Sprite):
+class SpriteCandy(pygame.sprite.Sprite):
     CANDY_COLORS = ["Red", "Purple", "Pink", "Yellow"]
     TOTAL_CANDIES = 0
     SIZE = Vector2(150, 50)
@@ -20,12 +20,12 @@ class Candy(pygame.sprite.Sprite):
 
     def __init__(self, *groups: pygame.sprite.Group):
         super().__init__(*groups)
-        self.number = Candy.TOTAL_CANDIES
-        self.color = Candy.CANDY_COLORS[self.number % len(Candy.CANDY_COLORS)]
-        self.image = pygame.Surface(Candy.SIZE)
+        self.number = SpriteCandy.TOTAL_CANDIES
+        self.color = SpriteCandy.CANDY_COLORS[self.number % len(SpriteCandy.CANDY_COLORS)]
+        self.image = pygame.Surface(SpriteCandy.SIZE)
         self.image.fill(self.color)
-        print(f"candy: Candy.VERTICAL_START = {Candy.VERTICAL_START}")
-        self.rect = self.image.get_rect(midbottom=(300, Candy.VERTICAL_START))
+        print(f"candy: SpriteCandy.VERTICAL_START = {SpriteCandy.VERTICAL_START}")
+        self.rect = self.image.get_rect(midbottom=(300, SpriteCandy.VERTICAL_START))
 
         self.label_surface = Font(None, 50). \
             render(str(self.number), True, "Black"). \
@@ -38,15 +38,15 @@ class Candy(pygame.sprite.Sprite):
 
     def move_up(self):
         self.motion_state = MotionState.UP
-        self.next_position = Vector2(self.rect.midbottom[0], self.rect.midbottom[1] - Candy.HEIGHT_CHANGE)
+        self.next_position = Vector2(self.rect.midbottom[0], self.rect.midbottom[1] - SpriteCandy.HEIGHT_CHANGE)
 
     def move_down(self):
         self.motion_state = MotionState.DOWN
-        self.next_position = Vector2(self.rect.midbottom[0], self.rect.midbottom[1] + Candy.HEIGHT_CHANGE)
+        self.next_position = Vector2(self.rect.midbottom[0], self.rect.midbottom[1] + SpriteCandy.HEIGHT_CHANGE)
 
     def move(self):
         if self.motion_state is not MotionState.REST:
-            self.t += Candy.INTERPOLATION_SPEED
+            self.t += SpriteCandy.INTERPOLATION_SPEED
             self.t = pygame.math.clamp(self.t, 0, 1)
             self.rect.midbottom = self.current_position.lerp(self.next_position, self.t)
 
@@ -55,25 +55,25 @@ class Candy(pygame.sprite.Sprite):
                 self.t = 0
 
                 # if self.motion_state is MotionState.UP:
-                #     Candy.increment_vertical_start()
+                #     SpriteCandy.increment_vertical_start()
                 # elif self.motion_state is MotionState.DOWN:
-                #     Candy.decrement_vertical_start()
+                #     SpriteCandy.decrement_vertical_start()
 
                 self.motion_state = MotionState.REST
 
     @classmethod
     def decrement_vertical_start(cls):
-        Candy.VERTICAL_START -= Candy.VERTICAL_START_CHANGE
-        Candy.TOTAL_CANDIES += 1
+        SpriteCandy.VERTICAL_START -= SpriteCandy.VERTICAL_START_CHANGE
+        SpriteCandy.TOTAL_CANDIES += 1
 
     @classmethod
     def increment_vertical_start(cls):
-        Candy.VERTICAL_START = min(Candy.BASE_VERTICAL_START, Candy.VERTICAL_START + Candy.VERTICAL_START_CHANGE)
-        Candy.TOTAL_CANDIES = max(0, Candy.TOTAL_CANDIES - 1)
+        SpriteCandy.VERTICAL_START = min(SpriteCandy.BASE_VERTICAL_START, SpriteCandy.VERTICAL_START + SpriteCandy.VERTICAL_START_CHANGE)
+        SpriteCandy.TOTAL_CANDIES = max(0, SpriteCandy.TOTAL_CANDIES - 1)
 
     def update(self, *args: Any, **kwargs: Any):
         self.move()
-        self.image.blit(self.label_surface, Candy.TEXT_POSITION)
+        self.image.blit(self.label_surface, SpriteCandy.TEXT_POSITION)
 
     def __str__(self) -> str:
-        return f"Candy(Color={self.color}, Number={self.number})"
+        return f"SpriteCandy(Color={self.color}, Number={self.number})"

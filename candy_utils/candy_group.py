@@ -1,6 +1,6 @@
 from pygame.sprite import Group
 
-from candy_utils.candy import Candy
+from candy_utils.sprite_candy import SpriteCandy
 from candy_utils.motion_state import MotionState
 
 
@@ -11,13 +11,13 @@ class CandyGroup(Group):
 
     def is_done_shifting(self) -> bool:
         for sprite in self.spritedict.keys():
-            if isinstance(sprite, Candy) and sprite.motion_state is not MotionState.REST:
+            if isinstance(sprite, SpriteCandy) and sprite.motion_state is not MotionState.REST:
                 return False
 
         if self.motion_state is MotionState.UP:
-            Candy.increment_vertical_start()
+            SpriteCandy.increment_vertical_start()
         elif self.motion_state is MotionState.DOWN:
-            Candy.decrement_vertical_start()
+            SpriteCandy.decrement_vertical_start()
         self.motion_state = MotionState.REST
 
         return True
@@ -25,11 +25,11 @@ class CandyGroup(Group):
     def shift_after_removal(self):
         self.motion_state = MotionState.UP
         for sprite in self.spritedict.keys():
-            if isinstance(sprite, Candy):
+            if isinstance(sprite, SpriteCandy):
                 sprite.move_up()
 
     def shift_after_addition(self):
         self.motion_state = MotionState.DOWN
         for sprite in self.spritedict.keys():
-            if isinstance(sprite, Candy):
+            if isinstance(sprite, SpriteCandy):
                 sprite.move_down()
