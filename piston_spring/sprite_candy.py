@@ -4,7 +4,7 @@ import pygame
 from pygame import Vector2
 from pygame.font import Font
 
-from candy_utils.motion_state import MotionState
+from piston_spring.motion_state import MotionState
 
 
 class SpriteCandy(pygame.sprite.Sprite):

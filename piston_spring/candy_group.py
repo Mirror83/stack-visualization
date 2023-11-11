@@ -1,7 +1,7 @@
 from pygame.sprite import Group
 
-from candy_utils.sprite_candy import SpriteCandy
-from candy_utils.motion_state import MotionState
+from piston_spring.sprite_candy import SpriteCandy
+from piston_spring.motion_state import MotionState
 
 
 class CandyGroup(Group):

@@ -3,10 +3,10 @@ from sys import exit
 import pygame
 from pygame import Vector2, QUIT, MOUSEBUTTONUP, BUTTON_LEFT
 
-from candy_utils.sprite_candy import SpriteCandy
-from candy_utils.candy_group import CandyGroup
-from candy_utils.menu import Menu
-from candy_utils.spring import Spring
+from piston_spring.sprite_candy import SpriteCandy
+from piston_spring.candy_group import CandyGroup
+from menu.menu import Menu
+from piston_spring.spring import Spring
 from stack import Stack
 
 pygame.init()
