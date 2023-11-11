@@ -3,7 +3,7 @@ import sys
 import pygame as pg
 from pygame import Vector2
 
-from candy_utils.menu import Menu
+from menu.menu import Menu
 from line_spring.candy_dispenser import CandyDispenser
 
 pg.init()
