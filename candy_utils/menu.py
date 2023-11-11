@@ -10,6 +10,9 @@ class Menu:
     A very specific menu that is used to display buttons that invoke operations on a stack
     and output, if any
     """
+
+    # The values below are default values. They are meant to be reset in the main
+    # application as needed
     FONT_SIZE = 50
     MOUSE_OFFSET = 600
 
