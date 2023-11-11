@@ -47,7 +47,7 @@ class Stack(Generic[T]):
     def pop(self) -> T:
         """
         Removes and returns the element at the top of the stack
-        :raises EmptyStackException If the stack is empty
+        :raise: EmptyStackException
         """
         if self.is_empty():
             raise Stack.EmptyStackException()
@@ -56,7 +56,8 @@ class Stack(Generic[T]):
     def peek(self) -> T:
         """
         Returns (but does not remove) the element at the top of the stack
-        :raises EmptyStackException if the stack is empty
+        :raise EmptyStackException if the stack is empty
+        :return: Element of type T
         """
         if self.is_empty():
             raise Stack.EmptyStackException()
