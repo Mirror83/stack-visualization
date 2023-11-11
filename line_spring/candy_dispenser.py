@@ -2,12 +2,12 @@ import pygame as pg
 from pygame import Vector2, Surface, Rect
 
 from stack import Stack
-from candy import Candy
+from line_spring.candy import Candy
 
 
 class CandyDispenser:
     def __init__(self, top_left: Vector2, size: Vector2):
-        self._capacity = 12  # Arbitrarily defined
+        self._capacity = 13  # Arbitrarily defined
         self._container_surface = Surface(size)
         self._container_rect = Rect(top_left, size)
         self._container_color = "Black"
@@ -36,7 +36,7 @@ class CandyDispenser:
             for candy in self._candies:
                 candy.render(self._spring_surface)
 
-    def _is_full(self):
+    def _is_full(self) -> bool:
         return len(self._candies) == self._capacity
 
     def add_candy(self) -> str:
@@ -46,16 +46,16 @@ class CandyDispenser:
 
             if self._candies.is_empty():
                 self._candies.push(Candy(
-                    Vector2(((self._points[0].x + self._points[1].x) / 2), self._points[0].y),
-                    Vector2(self._spring_rect.w, self._y_separation)
+                    Vector2(((self._points[0].x + self._points[1].x) / 2), self._points[0].y - 2),
+                    Vector2(self._spring_rect.w - 2, self._y_separation - 2)
                 ))
             else:
                 for candy in self._candies:
                     candy.move_down(self._y_separation)
                 self._candies.push(
                     Candy(
-                        Vector2(self._candies.peek().mid_top()),
-                        Vector2(self._spring_rect.w, self._y_separation)
+                        Vector2(self._candies.peek().mid_top().x, self._candies.peek().mid_top().y - 2 ),
+                        Vector2(self._spring_rect.w - 2, self._y_separation - 2)
                     )
                 )
             Candy.CURRENT_COLOR_INDEX += 1

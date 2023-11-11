@@ -14,7 +14,7 @@ class Candy:
         self._color = self.CANDY_COLORS[self.CURRENT_COLOR_INDEX % len(self.CANDY_COLORS)]
         self._number = self.CURRENT_COLOR_INDEX
         self._font = Font(None, 20)
-        self._font_surface = self._font.render(str(self._number), True, "Black").convert_alpha()
+        self._font_surface = self._font.render(str(self._number), True, "Purple").convert_alpha()
         self._font_rect = Rect(Vector2(0, 0), self._font_surface.get_size())
         self._font_rect.center = self._rect.center
 
