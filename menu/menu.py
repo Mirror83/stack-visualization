@@ -1,8 +1,8 @@
 from typing import Callable, Literal
 
-import pygame.mouse
 from pygame import Surface, Vector2, Rect, SYSTEM_CURSOR_HAND, SYSTEM_CURSOR_ARROW, Cursor
 from pygame.font import Font
+import pygame as pg
 
 
 class Menu:
@@ -31,11 +31,10 @@ class Menu:
             self.check_hover()
             self.font_surface = self.font.render(self.text, True, self.color).convert_alpha()
             menu.blit(self.font_surface, self.rect)
-            pygame.mouse.set_cursor(self.cursor)
             # pygame.draw.rect(menu, "Red", self.rect, width=1)
 
         def is_hover(self):
-            mouse_pos = Vector2(pygame.mouse.get_pos())
+            mouse_pos = Vector2(pg.mouse.get_pos())
             mouse_pos.x -= Menu.MOUSE_OFFSET  # To account for positioning relative to menu Surface
             is_hover = self.rect.collidepoint(mouse_pos)
             return is_hover
@@ -43,10 +42,15 @@ class Menu:
         def check_hover(self):
             if self.is_hover():
                 self.color = "Purple"
-                self.cursor = self.cursors[1]
+                if self.cursor != self.cursors[1]:
+                    self.cursor = self.cursors[1]
+                    pg.mouse.set_cursor(self.cursor)
+
             else:
                 self.color = "Black"
-                self.cursor = self.cursors[0]
+                if self.cursor != self.cursors[0]:
+                    self.cursor = self.cursors[0]
+                    pg.mouse.set_cursor(self.cursor)
 
         def click(self):
             self.on_click_handler()
@@ -82,7 +86,7 @@ class Menu:
         screen_rect = screen.get_rect()
         screen.blit(self.image, screen_rect.midtop)
         self.command_output.render(self.image)
-        pygame.draw.line(screen,
+        pg.draw.line(screen,
                          "Black",
                          Vector2(screen_rect.centerx, 350),
                          Vector2(screen_rect.right, 350),
