@@ -46,6 +46,11 @@ class Menu:
                     self.cursor = self.cursors[1]
                     pg.mouse.set_cursor(self.cursor)
 
+                event = pg.event.wait()
+                if event.type == pg.MOUSEBUTTONUP:
+                    if event.button == pg.BUTTON_LEFT:
+                        self.click()
+
             else:
                 self.color = "Black"
                 if self.cursor != self.cursors[0]:
@@ -58,7 +63,7 @@ class Menu:
     class CommandOutput:
         def __init__(self, text: str, top_left: Vector2):
             self.text = text
-            self.font = Font(None, 30)
+            self.font = Font(None, Menu.FONT_SIZE)
             self.color: Literal["Red", "Green"] = "Green"
 
             self.top_left = top_left
