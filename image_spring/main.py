@@ -9,20 +9,20 @@ from menu.menu import Menu
 
 def on_push():
     print("pushed")
-    output = candy_dispenser.push_candy()
-    menu.update_command_output(output)
+    output, is_error = candy_dispenser.push_candy()
+    menu.update_command_output(output, is_error)
 
 
 def on_pop():
     print("popped")
-    output = candy_dispenser.pop_candy()
-    menu.update_command_output(output)
+    output, is_error = candy_dispenser.pop_candy()
+    menu.update_command_output(output, is_error)
 
 
 def on_peek():
     print("peeked")
-    output = candy_dispenser.peek()
-    menu.update_command_output(output)
+    output, is_error = candy_dispenser.peek()
+    menu.update_command_output(output, is_error)
 
 
 def on_is_empty():
