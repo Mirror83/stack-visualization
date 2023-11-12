@@ -1,32 +1,40 @@
 import sys
 
 import pygame as pg
-from pygame import Vector2, Rect
+from pygame import Vector2
 
-from image_spring.candy_dispenser import Spring
+from image_spring.candy_dispenser import CandyDispenser
 from menu.menu import Menu
 
 
 def on_push():
     print("pushed")
-    spring.shrink()
+    output = candy_dispenser.push_candy()
+    menu.update_command_output(output)
 
 
 def on_pop():
     print("popped")
-    spring.grow()
+    output = candy_dispenser.pop_candy()
+    menu.update_command_output(output)
 
 
 def on_peek():
     print("peeked")
+    output = candy_dispenser.peek()
+    menu.update_command_output(output)
 
 
 def on_is_empty():
     print("is empty checked")
+    output = candy_dispenser.is_empty()
+    menu.update_command_output(output)
 
 
 def on_len():
     print("len checked")
+    output = candy_dispenser.len()
+    menu.update_command_output(output)
 
 
 pg.init()
@@ -37,10 +45,8 @@ pg.display.set_caption("Stack visualization")
 clock = pg.time.Clock()
 MAX_FPS = 60
 
-spring = Spring(mid_bottom=Vector2(SCREEN_SIZE.x / 4, SCREEN_SIZE.y - 10))
-
-container_rect = Rect(Vector2(0, 0), Vector2(250, spring.rect.height + 20))
-container_rect.midbottom = Vector2(SCREEN_SIZE.x / 4, SCREEN_SIZE.y)
+candy_dispenser = (
+    CandyDispenser(Vector2(SCREEN_SIZE.x / 4, SCREEN_SIZE.y)))
 
 buttons = [
     Menu.TextButton("S.push()", Vector2(20, 420), on_push, 35),
@@ -57,12 +63,11 @@ while True:
             pg.quit()
             sys.exit()
 
-    screen.fill("yellow")
-    pg.draw.rect(screen, "White", container_rect, 10)
+    screen.fill("Lightblue")
 
     menu.render(screen)
 
-    spring.render(screen)
+    candy_dispenser.render(screen)
 
     pg.display.flip()
 
