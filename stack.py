@@ -36,6 +36,12 @@ class Stack(Generic[T]):
     def __len__(self) -> int:
         return len(self.elements)
 
+    def __getitem__(self, index: int):
+        return self.elements[index]
+
+    def __str__(self):
+        return self.elements.__str__()
+
     def is_empty(self):
         """Returns `True` if the stack has no elements"""
         return len(self) == 0
