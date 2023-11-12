@@ -89,7 +89,7 @@ class CandyDispenser:
         self.candies = Stack[Candy]()
         self.max_candies = 11
 
-    def push_candy(self) -> str:
+    def push_candy(self) -> tuple[str, bool]:
         if len(self.candies) < self.max_candies:
             self.spring.shrink()
             if self.candies.is_empty():
@@ -105,12 +105,12 @@ class CandyDispenser:
 
             Candy.CURRENT_COLOR_INDEX += 1
             print(self.candies)
-            return ""
+            return "", False
         else:
             print(self.candies)
-            return "Candy dispenser is full!"
+            return "Candy dispenser is full!", True
 
-    def pop_candy(self) -> str:
+    def pop_candy(self) -> tuple[str, bool]:
         if not self.candies.is_empty():
             self.spring.grow()
 
@@ -123,16 +123,16 @@ class CandyDispenser:
 
             Candy.CURRENT_COLOR_INDEX -= 1
             print(self.candies)
-            return str(popped_candy)
+            return str(popped_candy), False
         else:
             print(self.candies)
-            return "Candy dispenser is empty!"
+            return "Candy dispenser is empty!", True
 
-    def peek(self) -> str:
+    def peek(self) -> tuple[str, bool]:
         if not self.candies.is_empty():
-            return str(self.candies.peek())
+            return str(self.candies.peek()), False
         else:
-            return "Candy dispenser is empty!"
+            return "Candy dispenser is empty!", True
 
     def len(self) -> str:
         return str(len(self.candies))
