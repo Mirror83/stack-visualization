@@ -87,9 +87,9 @@ class Menu:
         self.command_output = Menu.CommandOutput("", Vector2(self.rect.left + 20, 150))
         self.buttons = buttons
 
-    def update_command_output(self, text: str):
+    def update_command_output(self, text: str, is_error: bool = False):
         self.image.fill("White", Rect(0, 0, 600, 300))
-        self.command_output.update(text)
+        self.command_output.update(text, is_error)
 
     def render(self, screen: Surface):
         screen_rect = screen.get_rect()
