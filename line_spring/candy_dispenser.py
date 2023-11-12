@@ -1,8 +1,8 @@
 import pygame as pg
 from pygame import Vector2, Surface, Rect
 
-from stack import Stack
 from line_spring.candy import Candy
+from stack import Stack
 
 
 class CandyDispenser:
@@ -54,7 +54,7 @@ class CandyDispenser:
                     candy.move_down(self._y_separation)
                 self._candies.push(
                     Candy(
-                        Vector2(self._candies.peek().mid_top().x, self._candies.peek().mid_top().y - 2 ),
+                        Vector2(self._candies.peek().mid_top().x, self._candies.peek().mid_top().y - 2),
                         Vector2(self._spring_rect.w - 2, self._y_separation - 2)
                     )
                 )
