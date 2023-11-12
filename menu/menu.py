@@ -46,7 +46,7 @@ class Menu:
                     self.cursor = self.cursors[1]
                     pg.mouse.set_cursor(self.cursor)
 
-                event = pg.event.wait()
+                event = pg.event.poll()
                 if event.type == pg.MOUSEBUTTONUP:
                     if event.button == pg.BUTTON_LEFT:
                         self.click()
