@@ -64,11 +64,15 @@ class Menu:
         def __init__(self, text: str, top_left: Vector2):
             self.text = text
             self.font = Font(None, Menu.FONT_SIZE)
-            self.color: Literal["Red", "Green"] = "Green"
+            self.color: Literal["Red", "Darkgrey"] = "Darkgrey"
 
             self.top_left = top_left
 
-        def update(self, text: str):
+        def update(self, text: str, is_error: bool = False):
+            if is_error:
+                self.color = "Red"
+            else:
+                self.color = "Darkgrey"
             self.text = text
 
         def render(self, menu: Surface):
