@@ -2,6 +2,7 @@
 
 This is an attempt at an assignment given in my Design and Analysis of Algorithms class
 It involves coding a representation of a PEZ Candy dispenser using Python based on the screenshot below.
+
 ![Schematic drawing of a PEZ Candy Dispenser](./PEZ.png)
 
 # Status
